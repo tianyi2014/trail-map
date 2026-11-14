@@ -1,0 +1,22 @@
+name: Rename uploaded file to index.html
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  rename:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rename file
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -f "bei-da-hu-xue-dao-shi-ce-tu-xun-cha-ji-lu.html" ] && [ ! -f "index.html" ]; then
+            git mv bei-da-hu-xue-dao-shi-ce-tu-xun-cha-ji-lu.html index.html
+            git commit -m "Rename uploaded file to index.html"
+            git push
+          else
+            echo "Nothing to rename"
+            ls -la
+          fi
